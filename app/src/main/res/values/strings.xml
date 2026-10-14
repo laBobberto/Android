@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Empty</string>
+    <string name="hint_enter_text_or_phone">Введите текст или номер телефона</string>
+    <string name="btn_open_second_activity">Открыть вторую Activity</string>
+    <string name="btn_call_friend">Позвонить другу</string>
+    <string name="btn_share_text">Поделиться текстом</string>
+    <string name="second_activity_title">Полученный текст:</string>
+    <string name="btn_back">Назад</string>
+
+    <!-- Сообщения об ошибках валидации -->
+    <string name="error_empty_input">Поле не может быть пустым!</string>
+    <string name="error_invalid_phone">Введите корректный номер телефона (например, +79991234567)</string>
+    <string name="error_no_app">На устройстве нет приложения для выполнения этого действия</string>
+    <string name="share_chooser_title">Поделиться через…</string>
 </resources>
