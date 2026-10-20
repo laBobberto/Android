@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Empty</string>
+    <string name="app_name">Приложения</string>
+    <string name="toolbar_title">Приложения</string>
+    <string name="app_icon">Иконка приложения</string>
+    <string name="category_game">Игры</string>
+    <string name="category_social">Общение</string>
+    <string name="category_tools">Инструменты</string>
+    <string name="category_productivity">Продуктивность</string>
+    <string name="category_entertainment">Развлечения</string>
 </resources>
