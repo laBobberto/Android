@@ -2,6 +2,7 @@ package com.blobblob.empty
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,30 +19,45 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 
 @Composable
 fun AppListItem(
     app: AppItem,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(id = app.iconRes),
-            contentDescription = app.name,
-            modifier = Modifier
-                .size(64.dp)
-                .clip(RoundedCornerShape(14.dp))
-        )
+        if (!app.iconUrl.isNullOrEmpty()) {
+            AsyncImage(
+                model = app.iconUrl,
+                contentDescription = app.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(RoundedCornerShape(14.dp))
+            )
+        } else {
+            Image(
+                painter = painterResource(id = app.iconRes ?: R.mipmap.ic_launcher),
+                contentDescription = app.name,
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(RoundedCornerShape(14.dp))
+            )
+        }
         Spacer(modifier = Modifier.width(16.dp))
         Column(
             modifier = Modifier.weight(1f)
