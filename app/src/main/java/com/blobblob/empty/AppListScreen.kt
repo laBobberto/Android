@@ -20,6 +20,7 @@ import com.blobblob.empty.ui.theme.EmptyTheme
 
 @Composable
 fun AppListScreen(
+    onAppClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     apps: List<AppItem> = remember { AppDataSource.getApps() }
 ) {
@@ -40,7 +41,10 @@ fun AppListScreen(
                 items = apps,
                 key = { _, app -> app.id }
             ) { index, app ->
-                AppListItem(app = app)
+                AppListItem(
+                    app = app,
+                    onClick = { onAppClick(app.id) }
+                )
                 if (index < apps.lastIndex) {
                     HorizontalDivider(
                         modifier = Modifier.padding(start = 96.dp, end = 16.dp),
@@ -57,6 +61,6 @@ fun AppListScreen(
 @Composable
 fun AppListScreenPreview() {
     EmptyTheme {
-        AppListScreen()
+        AppListScreen(onAppClick = {})
     }
 }
