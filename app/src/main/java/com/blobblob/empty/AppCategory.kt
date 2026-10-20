@@ -7,5 +7,6 @@ enum class AppCategory(@StringRes val titleRes: Int) {
     SOCIAL(R.string.category_social),
     TOOLS(R.string.category_tools),
     PRODUCTIVITY(R.string.category_productivity),
-    ENTERTAINMENT(R.string.category_entertainment)
+    ENTERTAINMENT(R.string.category_entertainment),
+    APP(R.string.category_app)
 }
