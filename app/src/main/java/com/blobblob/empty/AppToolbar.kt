@@ -2,6 +2,7 @@ package com.blobblob.empty
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AppToolbar(
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -32,6 +34,7 @@ fun AppToolbar(
             .background(MaterialTheme.colorScheme.primary)
             .statusBarsPadding()
             .height(56.dp)
+            .clickable(onClick = onClick)
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
