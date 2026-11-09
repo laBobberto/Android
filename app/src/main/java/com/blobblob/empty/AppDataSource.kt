@@ -1,8 +1,12 @@
 package com.blobblob.empty
 
 import com.blobblob.empty.appdetails.AppDetails
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object AppDataSource {
+@Singleton
+class AppDataSource @Inject constructor() {
+
     fun getApps(): List<AppItem> = listOf(
         AppItem(
             id = "1",
