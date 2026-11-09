@@ -26,14 +26,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun AppListScreen(
     onAppClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AppListViewModel = viewModel()
+    viewModel: AppListViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }

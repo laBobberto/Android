@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.blobblob.empty.AppDataSource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.blobblob.empty.AppItem
 import com.blobblob.empty.R
 
@@ -32,9 +32,10 @@ fun AppDetailsScreen(
     onBackClick: () -> Unit,
     onShowcaseAppClick: (AppItem) -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: AppDetailsViewModel = hiltViewModel()
 ) {
-    val appDetails = remember(appId) { AppDataSource.getAppDetails(appId) }
-    val showcaseApps = remember { AppDataSource.getShowcaseApps() }
+    val appDetails = remember(appId) { viewModel.getAppDetails(appId) }
+    val showcaseApps = remember { viewModel.getShowcaseApps() }
 
     val context = LocalContext.current
     val underDevelopmentText = stringResource(R.string.under_developement)
