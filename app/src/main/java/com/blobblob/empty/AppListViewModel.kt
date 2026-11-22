@@ -2,7 +2,9 @@ package com.blobblob.empty
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.blobblob.empty.domain.AppsRepository
+import com.blobblob.empty.domain.usecase.GetAppsUseCase
+import com.blobblob.empty.domain.usecase.LoadRatingsInParallelUseCase
+import com.blobblob.empty.domain.usecase.LoadRatingsSequentiallyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
@@ -16,7 +18,9 @@ import kotlin.system.measureTimeMillis
 
 @HiltViewModel
 class AppListViewModel @Inject constructor(
-    private val repository: AppsRepository
+    private val getAppsUseCase: GetAppsUseCase,
+    private val loadRatingsSequentiallyUseCase: LoadRatingsSequentiallyUseCase,
+    private val loadRatingsInParallelUseCase: LoadRatingsInParallelUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AppListState>(AppListState.Loading)
@@ -33,7 +37,7 @@ class AppListViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = AppListState.Loading
             runCatching {
-                repository.getApps()
+                getAppsUseCase()
             }.onSuccess { apps ->
                 _state.value = AppListState.Content(apps = apps)
             }.onFailure {
@@ -51,9 +55,9 @@ class AppListViewModel @Inject constructor(
             var ratings: Map<String, Float> = emptyMap()
             val time = measureTimeMillis {
                 ratings = if (parallel) {
-                    repository.loadRatingsInParallel(ids)
+                    loadRatingsInParallelUseCase(ids)
                 } else {
-                    repository.loadRatingsSequentially(ids)
+                    loadRatingsSequentiallyUseCase(ids)
                 }
             }
             _state.update { state ->

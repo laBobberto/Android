@@ -2,7 +2,8 @@ package com.blobblob.empty.appdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.blobblob.empty.domain.AppsRepository
+import com.blobblob.empty.domain.usecase.GetAppDetailsUseCase
+import com.blobblob.empty.domain.usecase.GetShowcaseAppsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppDetailsViewModel @Inject constructor(
-    private val repository: AppsRepository
+    private val getAppDetailsUseCase: GetAppDetailsUseCase,
+    private val getShowcaseAppsUseCase: GetShowcaseAppsUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AppDetailsState>(AppDetailsState.Loading)
@@ -27,8 +29,8 @@ class AppDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = AppDetailsState.Loading
             runCatching {
-                val appDetails = repository.getAppDetails(appId)
-                val showcaseApps = repository.getShowcaseApps()
+                val appDetails = getAppDetailsUseCase(appId)
+                val showcaseApps = getShowcaseAppsUseCase()
                 AppDetailsState.Content(
                     appDetails = appDetails,
                     showcaseApps = showcaseApps

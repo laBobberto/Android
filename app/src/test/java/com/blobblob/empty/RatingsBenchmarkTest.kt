@@ -2,6 +2,8 @@ package com.blobblob.empty
 
 import com.blobblob.empty.data.AppApiImpl
 import com.blobblob.empty.data.AppsRepositoryImpl
+import com.blobblob.empty.data.mapper.AppDetailsMapper
+import com.blobblob.empty.data.mapper.AppMapper
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -13,8 +15,10 @@ class RatingsBenchmarkTest {
     @Test
     fun benchmarkRatingsLoading() = runBlocking {
         val dataSource = AppDataSource()
-        val api = AppApiImpl(dataSource)
-        val repository = AppsRepositoryImpl(dataSource, api)
+        val appMapper = AppMapper()
+        val appDetailsMapper = AppDetailsMapper()
+        val api = AppApiImpl(dataSource, appMapper)
+        val repository = AppsRepositoryImpl(dataSource, api, appMapper, appDetailsMapper)
 
         val ids = dataSource.getApps().map { it.id }
         assertEquals(10, ids.size)
