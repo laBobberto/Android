@@ -1,18 +1,23 @@
 package com.blobblob.empty
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -89,6 +94,34 @@ fun AppListScreen(
                 }
 
                 is AppListState.Content -> {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        OutlinedButton(
+                            onClick = { viewModel.loadRatings(parallel = false) },
+                            enabled = !currentState.isRatingsLoading,
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(text = stringResource(R.string.load_ratings_seq))
+                        }
+                        Button(
+                            onClick = { viewModel.loadRatings(parallel = true) },
+                            enabled = !currentState.isRatingsLoading,
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(text = stringResource(R.string.load_ratings_parallel))
+                        }
+                    }
+
+                    if (currentState.isRatingsLoading) {
+                        LinearProgressIndicator(
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()

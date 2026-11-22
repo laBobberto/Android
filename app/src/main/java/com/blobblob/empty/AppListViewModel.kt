@@ -9,8 +9,10 @@ import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.system.measureTimeMillis
 
 @HiltViewModel
 class AppListViewModel @Inject constructor(
@@ -37,6 +39,35 @@ class AppListViewModel @Inject constructor(
             }.onFailure {
                 _state.value = AppListState.Error(it.message)
             }
+        }
+    }
+
+    fun loadRatings(parallel: Boolean) {
+        viewModelScope.launch {
+            val current = _state.value
+            if (current !is AppListState.Content || current.isRatingsLoading) return@launch
+            _state.value = current.copy(isRatingsLoading = true)
+            val ids = current.apps.map { it.id }
+            var ratings: Map<String, Float> = emptyMap()
+            val time = measureTimeMillis {
+                ratings = if (parallel) {
+                    repository.loadRatingsInParallel(ids)
+                } else {
+                    repository.loadRatingsSequentially(ids)
+                }
+            }
+            _state.update { state ->
+                if (state is AppListState.Content) {
+                    state.copy(
+                        apps = state.apps.map { app ->
+                            app.copy(rating = ratings[app.id] ?: app.rating)
+                        },
+                        isRatingsLoading = false
+                    )
+                } else state
+            }
+            val mode = if (parallel) "Параллельно" else "Последовательно"
+            _events.send(AppListEvent.ShowSnackbar("$mode: $time мс"))
         }
     }
 

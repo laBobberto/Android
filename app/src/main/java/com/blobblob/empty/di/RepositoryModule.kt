@@ -1,5 +1,7 @@
 package com.blobblob.empty.di
 
+import com.blobblob.empty.data.AppApi
+import com.blobblob.empty.data.AppApiImpl
 import com.blobblob.empty.data.AppsRepositoryImpl
 import com.blobblob.empty.domain.AppsRepository
 import dagger.Binds
@@ -15,4 +17,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindAppsRepository(impl: AppsRepositoryImpl): AppsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAppApi(impl: AppApiImpl): AppApi
 }

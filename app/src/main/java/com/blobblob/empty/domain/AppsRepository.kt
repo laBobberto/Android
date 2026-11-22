@@ -7,4 +7,6 @@ interface AppsRepository {
     fun getApps(): List<AppItem>
     fun getShowcaseApps(): List<AppItem>
     fun getAppDetails(appId: String): AppDetails
+    suspend fun loadRatingsSequentially(ids: List<String>): Map<String, Float>
+    suspend fun loadRatingsInParallel(ids: List<String>): Map<String, Float>
 }

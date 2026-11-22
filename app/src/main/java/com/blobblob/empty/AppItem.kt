@@ -6,5 +6,6 @@ data class AppItem(
     val description: String,
     val category: AppCategory,
     val iconRes: Int? = null,
-    val iconUrl: String? = null
+    val iconUrl: String? = null,
+    val rating: Float? = null
 )
