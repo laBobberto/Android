@@ -14,9 +14,10 @@ sealed interface AppDetailsState {
     data object Loading : AppDetailsState
     data class Content(
         val appDetails: AppDetails,
-        val showcaseApps: List<AppItem>,
+        val showcaseApps: List<AppItem> = emptyList(),
         val installState: InstallState = InstallState.NotInstalled,
-        val descriptionCollapsed: Boolean = false
+        val descriptionCollapsed: Boolean = false,
+        val isInWishlist: Boolean = appDetails.isInWishlist
     ) : AppDetailsState
     data object Error : AppDetailsState
 }

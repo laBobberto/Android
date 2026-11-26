@@ -87,6 +87,10 @@ fun AppDetailsScreen(
                     onShareClick = {
                         Toast.makeText(context, underDevelopmentText, Toast.LENGTH_SHORT).show()
                     },
+                    isInWishlist = currentState.isInWishlist,
+                    onWishlistClick = {
+                        viewModel.toggleWishlist()
+                    }
                 )
                 Spacer(Modifier.height(8.dp))
                 AppDetailsHeader(
