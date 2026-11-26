@@ -1,0 +1,30 @@
+package com.blobblob.empty.di
+
+import com.blobblob.empty.data.AppApi
+import com.blobblob.empty.data.AppApiImpl
+import com.blobblob.empty.data.AppDetailsRepositoryImpl
+import com.blobblob.empty.data.AppsRepositoryImpl
+import com.blobblob.empty.domain.AppDetailsRepository
+import com.blobblob.empty.domain.AppsRepository
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindAppsRepository(impl: AppsRepositoryImpl): AppsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAppDetailsRepository(impl: AppDetailsRepositoryImpl): AppDetailsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAppApi(impl: AppApiImpl): AppApi
+}
