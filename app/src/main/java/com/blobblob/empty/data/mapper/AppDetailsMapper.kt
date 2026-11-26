@@ -24,7 +24,8 @@ class AppDetailsMapper @Inject constructor() {
             size = dto.size,
             iconUrl = dto.iconUrl,
             screenshotUrlList = dto.screenshotUrlList,
-            description = dto.description
+            description = dto.description,
+            isInWishlist = dto.isInWishlist
         )
     }
 
@@ -38,7 +39,8 @@ class AppDetailsMapper @Inject constructor() {
             size = domain.size,
             iconUrl = domain.iconUrl,
             screenshotUrlList = domain.screenshotUrlList,
-            description = domain.description
+            description = domain.description,
+            isInWishlist = domain.isInWishlist
         )
     }
 }

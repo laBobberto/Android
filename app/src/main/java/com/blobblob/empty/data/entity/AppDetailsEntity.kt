@@ -1,0 +1,19 @@
+package com.blobblob.empty.data.entity
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "app_details")
+data class AppDetailsEntity(
+    @PrimaryKey
+    val id: String,
+    val name: String,
+    val developer: String,
+    val category: String,
+    val ageRating: Int,
+    val size: Float,
+    val iconUrl: String,
+    val screenshotUrls: String,
+    val description: String,
+    val isInWishlist: Boolean = false
+)
